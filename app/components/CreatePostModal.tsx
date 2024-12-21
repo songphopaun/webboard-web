@@ -23,6 +23,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
 
     const {
         handleSubmit,
+        reset,
         control,
         watch,
         setValue,
@@ -49,6 +50,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
     }) => {
         if (data.communityId && data.title && data.content) {
             onSubmit(data);
+            reset();
             onClose();
         }
     };

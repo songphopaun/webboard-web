@@ -15,14 +15,16 @@ const Sidebar = () => {
                     <Link
                         href="/"
                         className={`flex items-center px-3 py-2 rounded-md transition-colors ${
-                            pathname === '/'
+                            pathname === '/' || pathname.startsWith('/post')
                                 ? 'text-brand-green500 font-semibold '
                                 : 'text-gray-700 '
                         }`}
                     >
                         <RiHome6Line
                             className={`h-6 w-6 ${
-                                pathname === '/' ? 'font-bold' : ''
+                                pathname === '/' || pathname.startsWith('/post')
+                                    ? 'font-bold'
+                                    : ''
                             }`}
                         />
                         <span className="ml-3">Home</span>

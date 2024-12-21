@@ -7,6 +7,7 @@ import PostCard from './components/PostCard';
 import SearchAndControls from './components/SearchAndControls';
 import { findAllPosts, Post } from '@/services/post';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
     const [listPost, setListPost] = useState<Post[]>([]);
@@ -48,9 +49,10 @@ export default function Home() {
                             const isFirst = index === 0;
                             const isLast = index === filteredPosts.length - 1;
                             return (
-                                <div key={item.id}>
+                                <Link key={item.id} href={`/post/${item.id}`}>
                                     <PostCard
                                         author={item.user.username}
+                                        avatar={item.user.img}
                                         community={item.community.name}
                                         title={item.title}
                                         content={item.content}
@@ -59,7 +61,7 @@ export default function Home() {
                                         isLast={isLast}
                                         searchQuery={searchQuery}
                                     />
-                                </div>
+                                </Link>
                             );
                         })}
                     </div>

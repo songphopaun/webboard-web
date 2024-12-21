@@ -15,6 +15,7 @@ export interface Comment {
     id: number;
     content: string;
     user: User;
+    createdAt?: string;
 }
 
 export interface User {
@@ -30,12 +31,19 @@ export interface Post {
     community: Community;
     user: User;
     comments: Comment[];
+    createdAt?: string;
 }
 
 export interface PostResponse {
     statusCode: number;
     message: string;
     data: Post[];
+}
+
+export interface SinglePostResponse {
+    statusCode: number;
+    message: string;
+    data: Post;
 }
 
 export const findAllCommunity = async (): Promise<CommunityResponse> => {
@@ -57,5 +65,20 @@ export const createPost = async (body: {
     content: string;
 }): Promise<PostResponse> => {
     const { data } = await api.post<PostResponse>('/post', body);
+    return data;
+};
+
+export const findByPost = async (
+    postId: number
+): Promise<SinglePostResponse> => {
+    const { data } = await api.get<SinglePostResponse>(`post/postId/${postId}`);
+    return data;
+};
+
+export const createComment = async (body: {
+    postId: number;
+    content: string;
+}): Promise<PostResponse> => {
+    const { data } = await api.post<PostResponse>('/comment', body);
     return data;
 };

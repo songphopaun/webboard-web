@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { IoSearchOutline } from 'react-icons/io5';
 import { IoIosArrowDown, IoIosCheckmark } from 'react-icons/io';
@@ -22,6 +23,7 @@ const SearchAndControls: React.FC<SearchAndControlsProps> = ({
     setSearchQuery,
     getListPost,
 }) => {
+    const router = useRouter();
     const showAlert = useAlertStore.getState().showAlert;
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [listCommunity, setListCommunity] = useState<Community[]>([]);
@@ -42,7 +44,12 @@ const SearchAndControls: React.FC<SearchAndControlsProps> = ({
         setIsDropdownOpen(!isDropdownOpen);
     };
 
-    const handleOpenModal = () => setIsModalOpen(true);
+    const handleOpenModal = () => {
+        const token = localStorage.getItem('accessToken');
+
+        if (!token) return router.push('/login');
+        setIsModalOpen(true);
+    };
     const handleCloseModal = () => setIsModalOpen(false);
 
     const handleCreatePost = async (data: {

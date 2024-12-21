@@ -35,6 +35,7 @@ export default function Login() {
 
     const onSubmit = async (data: LoginFormValues) => {
         try {
+            setIsLoading(true);
             const res = await login({ username: data.username });
             localStorage.setItem('accessToken', res.data.accessToken);
             setUser(

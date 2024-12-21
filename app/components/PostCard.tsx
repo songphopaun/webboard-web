@@ -1,7 +1,10 @@
 import { FaRegComment } from 'react-icons/fa';
+import { formatRelativeTime } from '../utils/relativeTime';
+import Image from 'next/image';
 
 type PostCardProps = {
     author: string;
+    avatar: string;
     community: string;
     title: string;
     content: string;
@@ -9,10 +12,12 @@ type PostCardProps = {
     isFirst?: boolean;
     isLast?: boolean;
     searchQuery?: string;
+    createdAt?: string;
 };
 
 export default function PostCard({
     author,
+    avatar,
     community,
     title,
     content,
@@ -20,6 +25,7 @@ export default function PostCard({
     isFirst = false,
     isLast = false,
     searchQuery = '',
+    createdAt,
 }: PostCardProps) {
     const highlightText = (text: string, query: string) => {
         if (!query) return text;
@@ -41,23 +47,33 @@ export default function PostCard({
 
     return (
         <div
-            className={`bg-white p-6 border-gray-200 ${
+            className={`bg-white p-6 border-gray-100 ${
                 isFirst ? 'rounded-t-lg border-t' : ''
             } ${isLast ? 'rounded-b-lg border-b' : 'border-b'}`}
         >
             <div className="flex flex-col">
                 <div className="flex items-center mb-3">
-                    <img
-                        src=" https://i.pravatar.cc/300"
+                    <Image
+                        src={avatar}
                         alt={`${author}'s avatar`}
                         className="w-12 h-12 rounded-full"
+                        width={48}
+                        height={48}
+                        objectFit="cover"
+                        quality={80}
+                        priority
                     />
 
                     <h4 className="pl-2 text-sm font-medium text-base-grey300 ">
-                        {author}
+                        <span className={createdAt && `text-[#191919]`}>
+                            {author}
+                        </span>
+                        <span className="ms-2">
+                            {createdAt && formatRelativeTime(createdAt)}
+                        </span>
                     </h4>
                 </div>
-                <span className="text-base-grey text-xs font-normal font-ibm pl-2">
+                <span className=" w-14 h-6 flex items-center justify-center text-base-grey text-xs font-normal font-ibm bg-[#F3F3F3] rounded-xl">
                     {community}
                 </span>
                 <h3 className="text-base text-[#101828] font-semibold mt-2">
