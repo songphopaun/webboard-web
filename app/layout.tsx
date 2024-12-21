@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import Navbar from './components/Navbar';
 import Alert from './components/Alert';
 
 const inter = Inter({
@@ -26,7 +25,7 @@ export default function RootLayout({
                     <div className="absolute top-10 left-1/2 transform -translate-x-1/2 z-50 w-4/5 md:w-2/5">
                         <Alert />
                     </div>
-                    <Navbar />
+
                     {children}
                 </div>
             </body>

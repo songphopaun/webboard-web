@@ -25,6 +25,7 @@ export default {
                 base: {
                     black: '#000000',
                     white: '#ffffff',
+                    grey: '#4A4A4A',
                     grey100: '#BBC2C0',
                     grey300: '#939494',
                     success: '#49A569',

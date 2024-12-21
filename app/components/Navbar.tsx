@@ -10,7 +10,7 @@ import Link from 'next/link';
 function Navbar() {
     const { username, img } = useUserStore((state) => state);
     const [isOpen, setIsOpen] = useState(false);
-    console.log(' username, img', username, img);
+
     return (
         <nav className="bg-brand-green500 text-white p-4">
             <div className="flex justify-between items-center mx-4">
