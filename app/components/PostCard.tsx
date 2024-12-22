@@ -47,7 +47,9 @@ export default function PostCard({
 }: PostCardProps) {
     const highlightText = (text: string, query: string) => {
         if (!query) return text;
-        const parts = text.split(new RegExp(`(${query})`, 'gi'));
+        const escapedQuery = query.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
+
+        const parts = text.split(new RegExp(`(${escapedQuery})`, 'gi'));
         return (
             <>
                 {parts.map((part, index) =>

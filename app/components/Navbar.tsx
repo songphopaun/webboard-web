@@ -1,15 +1,27 @@
 'use client';
 import React, { useState } from 'react';
+import Image from 'next/image';
+
 import { IoIosArrowRoundForward } from 'react-icons/io';
 import { RiHome6Line } from 'react-icons/ri';
 import { LiaEdit } from 'react-icons/lia';
 import { IoMenuOutline } from 'react-icons/io5';
 import { useUserStore } from '@/stores';
 import Link from 'next/link';
+import { logout } from '@/services/auth';
 
 function Navbar() {
+    const resetUser = useUserStore((state) => state.resetUser);
+
     const { username, img } = useUserStore((state) => state);
     const [isOpen, setIsOpen] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const handleLogout = () => {
+        setIsDropdownOpen(false);
+        resetUser();
+        logout();
+    };
 
     return (
         <nav className="bg-brand-green500 text-white p-4">
@@ -17,13 +29,42 @@ function Navbar() {
                 <span className="font-castoro italic text-xl">a Board</span>
                 <div className="hidden md:flex space-x-4 items-center">
                     {username ? (
-                        <div className="flex items-center gap-2">
-                            <span className="font-medium">{username}</span>
-                            <img
+                        <div className="relative">
+                            <div className="flex items-center gap-2">
+                                <span className="font-medium">{username}</span>
+                                {/* <img
                                 src={img}
                                 alt="avatar"
                                 className="w-10 h-10 rounded-full"
-                            />
+                                onClick={() =>
+                                    setIsDropdownOpen(!isDropdownOpen)
+                                }
+                            /> */}
+                                <Image
+                                    src={img}
+                                    alt={`avatar`}
+                                    className="w-10 h-10 rounded-full"
+                                    objectFit="cover"
+                                    width={48}
+                                    height={48}
+                                    quality={80}
+                                    priority
+                                    onClick={() =>
+                                        setIsDropdownOpen(!isDropdownOpen)
+                                    }
+                                />
+
+                                {isDropdownOpen && (
+                                    <div className="absolute right-0 mt-32 w-40 bg-brand-green100 rounded-lg shadow-lg py-2 text-black z-50">
+                                        <button
+                                            className="w-full text-left px-4 py-2 "
+                                            onClick={handleLogout}
+                                        >
+                                            Logout
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     ) : (
                         <Link href="/login">
