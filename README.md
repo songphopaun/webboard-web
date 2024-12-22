@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Next.js Web Board Application
 
-## Getting Started
+This is a Next.js web application for managing posts and comments. It includes a home page for listing posts, a post details page, and modals for creating and deleting posts.
 
-First, run the development server:
+Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+-   **User Authentication**  
+    Secure login functionality for user authentication and session management.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+-   **Search Functionality**  
+    Enables users to easily filter and find posts.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+-   **Post Management**  
+    Comprehensive features for creating, editing, and deleting posts.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+-   **Comment Creation**  
+    Allows users to add comments to posts.
 
-## Learn More
+-   **Responsive**  
+    Responsive design for both desktop and mobile.
 
-To learn more about Next.js, take a look at the following resources:
+Start project run scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-   npm install : Install dependencies
+-   npm run dev : Start the development server.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Project Structure
+webboard-web/
+├── .next/ # Compiled Next.js build files (auto-generated, do not modify directly)
+├── app/ # Main application directory
+│ ├── assets/ # Static assets (e.g., images, icons)
+│ │ └── images/
+│ │ └── notebook.png
+│ ├── components/ # Reusable React components
+│ │ ├── model/ # Modal components
+│ │ ├── Navbar.tsx # Navigation bar component
+│ │ ├── PostCard.tsx # Post card component for displaying posts
+│ │ ├── SearchAndControls.tsx # Search and filter controls for posts
+│ │ └── Sidebar.tsx # Sidebar navigation
+│ ├── login/ # Login page directory
+│ │ └── page.tsx
+│ ├── our-blog/  
+│ │ ├── layout.tsx # Layout component for the blog page
+│ │ └── page.tsx # Blog page entry point
+│ ├── post/ # Post details page directory
+│ │ └── [id]/ # Dynamic route for specific post details
+│ │ └── layout.tsx # Layout for the post detail page
+│ ├── utils/ # Utility files and configurations
+│ ├── layout.tsx # Default layout for the entire application
+│ └── page.tsx # Root page of the application
+├── public/ # Publicly accessible static files
+├── services/ # API service integrations
+│ ├── api.ts # Base API setup
+│ ├── auth.ts # Authentication API services
+│ └── post.ts # Post and comment API services
+├── stores/ # Zustand state management
+│ ├── index.ts # Root store configuration
+│ ├── useAlertStore.ts # Zustand store for alert modals
+│ └── useUserStore.ts # Zustand store for user session management
+├── .env # Environment variables
+├── .gitignore # Files and folders to ignore in Git
+├── eslint.config.mjs # ESLint configuration
+├── next-env.d.ts # TypeScript definitions for Next.js
+├── next.config.js # Next.js application configuration
+└── tsconfig.json # TypeScript configuration
 
-## Deploy on Vercel
+Libraries
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+-   zustand: Used for state management library
+-   react-icons: Used for icons
+-   axios: Handles API requests
+-   date-fns: Used to display human-readable timestamps
