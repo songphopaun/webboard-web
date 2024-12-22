@@ -70,3 +70,6 @@ Libraries
 -   react-icons: Used for icons
 -   axios: Handles API requests
 -   date-fns: Used to display human-readable timestamps
+
+ENV
+NEXT_PUBLIC_API_BASE_URL=http://localhost:4001
