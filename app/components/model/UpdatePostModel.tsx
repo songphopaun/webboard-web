@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { IoIosArrowDown, IoIosClose, IoIosCheckmark } from 'react-icons/io';
 
-interface CreatePostModalProps {
+interface UpdatePostModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSubmit: (data: {
@@ -11,13 +11,20 @@ interface CreatePostModalProps {
         content: string;
     }) => void;
     listCommunity: { id: number; name: string }[];
+    dataUpdate: {
+        id: number;
+        communityId: number;
+        title: string;
+        content: string;
+    } | null;
 }
 
-const CreatePostModal: React.FC<CreatePostModalProps> = ({
+const UpdatePostModal: React.FC<UpdatePostModalProps> = ({
     isOpen,
     onClose,
     onSubmit,
     listCommunity,
+    dataUpdate,
 }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -38,6 +45,14 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
 
     const communityId = watch('communityId');
 
+    useEffect(() => {
+        if (dataUpdate) {
+            setValue('communityId', dataUpdate.communityId);
+            setValue('title', dataUpdate.title);
+            setValue('content', dataUpdate.content);
+        }
+    }, [dataUpdate]);
+
     const handleDropdownSelect = (id: number) => {
         setValue('communityId', id);
         setIsDropdownOpen(false);
@@ -56,12 +71,11 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
     };
 
     if (!isOpen) return null;
-
     return (
         <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg shadow-lg max-w-3xl w-full p-6">
+            <div className="bg-white rounded-lg shadow-lg max-w-3xl w-full p-6 m-5">
                 <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-semibold">Create Post</h2>
+                    <h2 className="text-2xl font-semibold">Edit Post</h2>
                     <button className="text-brand-green500" onClick={onClose}>
                         <IoIosClose className="w-7 h-7" />
                     </button>
@@ -126,6 +140,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
                                     type="text"
                                     placeholder="Title"
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none ring-1 ring-[#DADADA]"
+                                    // value={dataUpdate ? dataUpdate.title : ''}
                                 />
                             )}
                         />
@@ -147,6 +162,7 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
                                     placeholder="What's on your mind..."
                                     className="w-full min-h-56 px-4 py-2 border rounded-lg focus:outline-none ring-1 ring-[#DADADA]"
                                     rows={4}
+                                    // value={dataUpdate ? dataUpdate.content : ''}
                                 />
                             )}
                         />
@@ -178,4 +194,4 @@ const CreatePostModal: React.FC<CreatePostModalProps> = ({
     );
 };
 
-export default CreatePostModal;
+export default UpdatePostModal;

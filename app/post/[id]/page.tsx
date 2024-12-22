@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useAlertStore } from '../../../stores';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import Link from 'next/link';
+import CreateCommentModal from '@/app/components/model/CreateCommentModal';
 
 function PostDetail() {
     const router = useRouter();
@@ -19,6 +20,7 @@ function PostDetail() {
 
     const [post, setPost] = useState<Post | null>(null);
     const [isComment, setIsComment] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [comment, setComment] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
@@ -31,12 +33,18 @@ function PostDetail() {
         setPost(res.data);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (data: { comment: string } | string) => {
         try {
+            const commentContent =
+                typeof data === 'object' ? data.comment : data;
+
+            const commentData =
+                window.innerWidth < 768 ? commentContent : comment;
+
             setIsLoading(true);
             const res = await createComment({
                 postId: Number(id),
-                content: comment,
+                content: commentData,
             });
             showAlert(res.message, 'success');
             setIsComment(!isComment);
@@ -64,8 +72,15 @@ function PostDetail() {
         const token = localStorage.getItem('accessToken');
         if (!token) return router.push('/login');
 
-        setIsComment(!isComment);
+        if (window.innerWidth < 768) {
+            setIsModalOpen(!isModalOpen);
+        } else {
+            setIsComment(!isComment);
+        }
     };
+
+    const handleCloseModal = () => setIsModalOpen(false);
+
     if (!post) return <p>Loading...</p>;
 
     return (
@@ -77,8 +92,10 @@ function PostDetail() {
             </Link>
 
             <PostCard
+                id={post.id}
                 author={post.user.username}
                 avatar={post.user.img}
+                communityId={post.community.id}
                 community={post.community.name}
                 title={post.title}
                 content={post.content}
@@ -104,7 +121,7 @@ function PostDetail() {
                         <button
                             type="submit"
                             className="w-full sm:w-24 h-10 bg-base-success text-white rounded-lg font-ibm font-semibold text-sm hover:bg-brand-green500"
-                            onClick={handleSubmit}
+                            onClick={() => handleSubmit('')}
                             disabled={isLoading}
                         >
                             Post
@@ -153,6 +170,11 @@ function PostDetail() {
                     );
                 })}
             </div>
+            <CreateCommentModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                onSubmit={handleSubmit}
+            />
         </div>
     );
 }

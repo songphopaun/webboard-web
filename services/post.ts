@@ -82,3 +82,32 @@ export const createComment = async (body: {
     const { data } = await api.post<PostResponse>('/comment', body);
     return data;
 };
+
+export const findAllByUser = async (
+    communityId?: number | null
+): Promise<PostResponse> => {
+    const url = communityId
+        ? `/post/user?communityId=${communityId}`
+        : `/post/user`;
+    const { data } = await api.get<PostResponse>(url);
+    return data;
+};
+
+export const deletePost = async (
+    postId?: number | null
+): Promise<PostResponse> => {
+    const { data } = await api.delete<PostResponse>(`/post/${postId}`);
+    return data;
+};
+
+export const updatePost = async (
+    body: {
+        communityId: number;
+        title: string;
+        content: string;
+    },
+    postId: number
+): Promise<PostResponse> => {
+    const { data } = await api.put<PostResponse>(`/post/${postId}`, body);
+    return data;
+};

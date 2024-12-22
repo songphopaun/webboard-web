@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { IoSearchOutline } from 'react-icons/io5';
 import { IoIosArrowDown, IoIosCheckmark } from 'react-icons/io';
 import { Community, createPost, findAllCommunity } from '@/services/post';
-import CreatePostModal from './CreatePostModal';
+import CreatePostModal from './model/CreatePostModal';
 import axios from 'axios';
 import { useAlertStore } from '../../stores';
 

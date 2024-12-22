@@ -1,10 +1,15 @@
-import { FaRegComment } from 'react-icons/fa';
-import { formatRelativeTime } from '../utils/relativeTime';
 import Image from 'next/image';
 
+import { formatRelativeTime } from '../utils/relativeTime';
+import { FaRegComment } from 'react-icons/fa';
+import { FiEdit3 } from 'react-icons/fi';
+import { RiDeleteBinLine } from 'react-icons/ri';
+
 type PostCardProps = {
+    id: number;
     author: string;
     avatar: string;
+    communityId: number;
     community: string;
     title: string;
     content: string;
@@ -13,11 +18,21 @@ type PostCardProps = {
     isLast?: boolean;
     searchQuery?: string;
     createdAt?: string;
+    isUpdate?: boolean;
+    setIsModalDeleteOpen?: (id: number) => void;
+    setIsModalUpdateOpen?: (
+        id: number,
+        communityId: number,
+        title: string,
+        content: string
+    ) => void;
 };
 
 export default function PostCard({
+    id,
     author,
     avatar,
+    communityId,
     community,
     title,
     content,
@@ -26,6 +41,9 @@ export default function PostCard({
     isLast = false,
     searchQuery = '',
     createdAt,
+    isUpdate = false,
+    setIsModalDeleteOpen,
+    setIsModalUpdateOpen,
 }: PostCardProps) {
     const highlightText = (text: string, query: string) => {
         if (!query) return text;
@@ -64,16 +82,41 @@ export default function PostCard({
                         priority
                     />
 
-                    <h4 className="pl-2 text-sm font-medium text-base-grey300 ">
-                        <span className={createdAt && `text-[#191919]`}>
-                            {author}
-                        </span>
-                        <span className="ms-2">
-                            {createdAt && formatRelativeTime(createdAt)}
-                        </span>
+                    <h4 className="pl-2 text-sm font-medium text-base-grey300 flex justify-between w-full ">
+                        <div>
+                            <span className={createdAt && `text-[#191919]`}>
+                                {author}
+                            </span>
+                            <span className="ms-2">
+                                {createdAt && formatRelativeTime(createdAt)}
+                            </span>
+                        </div>
+                        {isUpdate && (
+                            <div className="flex gap-4 text-brand-green500">
+                                <FiEdit3
+                                    onClick={() =>
+                                        setIsModalUpdateOpen &&
+                                        setIsModalUpdateOpen(
+                                            id,
+                                            communityId,
+                                            title,
+                                            content
+                                        )
+                                    }
+                                    className="h-4 w-4 cursor-pointer"
+                                />
+                                <RiDeleteBinLine
+                                    onClick={() =>
+                                        setIsModalDeleteOpen &&
+                                        setIsModalDeleteOpen(id)
+                                    }
+                                    className="h-4 w-4 cursor-pointer"
+                                />
+                            </div>
+                        )}
                     </h4>
                 </div>
-                <span className=" w-14 h-6 flex items-center justify-center text-base-grey text-xs font-normal font-ibm bg-[#F3F3F3] rounded-xl">
+                <span className=" w-14 h-6 flex items-center justify-center text-base-grey text-xs font-normal font-ibm">
                     {community}
                 </span>
                 <h3 className="text-base text-[#101828] font-semibold mt-2">

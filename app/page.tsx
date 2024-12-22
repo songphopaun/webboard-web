@@ -51,8 +51,10 @@ export default function Home() {
                             return (
                                 <Link key={item.id} href={`/post/${item.id}`}>
                                     <PostCard
+                                        id={item.id}
                                         author={item.user.username}
                                         avatar={item.user.img}
+                                        communityId={item.community.id}
                                         community={item.community.name}
                                         title={item.title}
                                         content={item.content}

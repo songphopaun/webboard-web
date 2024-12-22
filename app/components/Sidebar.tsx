@@ -31,16 +31,16 @@ const Sidebar = () => {
                     </Link>
 
                     <Link
-                        href="/blog"
+                        href="/our-blog"
                         className={`flex items-center px-3 py-2 rounded-md transition-colors ${
-                            pathname === '/blog'
+                            pathname === '/our-blog'
                                 ? 'text-brand-green500 font-semibold '
                                 : 'text-gray-700 '
                         }`}
                     >
                         <LiaEdit
                             className={`h-6 w-6 ${
-                                pathname === '/blog' ? 'font-bold' : ''
+                                pathname === '/our-blog' ? 'font-bold' : ''
                             }`}
                         />
                         <span className="ml-3">Our Blog</span>
